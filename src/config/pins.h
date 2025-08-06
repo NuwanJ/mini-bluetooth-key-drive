@@ -8,24 +8,17 @@
 // Analog Inputs --------
 #define PIN_KNOB 0 // GPIO0 / ADC1_0
 
-#define PIN_KEY_0 3
-#define PIN_KEY_1 4
-#define PIN_KEY_2 7
-#define PIN_KEY_3 10
-#define PIN_KEY_4 20
-#define PIN_KEY_5 21
-
 // Analog Outputs --------
 #define PIN_ENC_A 0
 #define PIN_ENC_B 1
 
-// Button input pins ---------
-#define PIN_BUTTON_1 2
-#define PIN_BUTTON_2 3
-#define PIN_BUTTON_3 4
-#define PIN_BUTTON_4 5
-#define PIN_BUTTON_5 9
-#define PIN_BUTTON_6 10
+// Digital Inputs --------
+#define PIN_BUTTON_1 3
+#define PIN_BUTTON_2 4
+#define PIN_BUTTON_3 7
+#define PIN_BUTTON_4 10
+#define PIN_BUTTON_5 20
+#define PIN_BUTTON_6 21
 
 // I2C pins ---------------
 #define PIN_SDA 5 // GPIO5
