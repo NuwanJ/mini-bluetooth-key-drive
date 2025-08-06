@@ -6,24 +6,27 @@
 #define PIN_LED_INBUILT 8
 
 // Analog Inputs --------
-#define PIN_A0 2
-#define PIN_A1 3
-#define PIN_A2 4
-#define PIN_A3 5
+#define PIN_KNOB 0 // GPIO0 / ADC1_0
+
+#define PIN_KEY_0 3
+#define PIN_KEY_1 4
+#define PIN_KEY_2 7
+#define PIN_KEY_3 10
+#define PIN_KEY_4 20
+#define PIN_KEY_5 21
 
 // Analog Outputs --------
-#define PIN_ADC_0 0
-#define PIN_ADC_1 1
+#define PIN_ENC_A 0
+#define PIN_ENC_B 1
 
 // I2C pins ---------------
-#define PIN_SCL 7
-#define PIN_SDA 6
+#define PIN_SDA 5 // GPIO5
+#define PIN_SCL 6 // GPIO6
 
 // UART pins --------------
-#define PIN_TX_0 21
-#define PIN_RX_0 20
+#define PIN_TX_0 20 // GPIO21
+#define PIN_RX_0 21 // GPIO20
 
-// SPI pins ---------------
-#define PIN_SCK 8
-#define PIN_MOSI 10
-#define PIN_MISO 9
+// Avoid using
+// GPIO8 - internal flash
+// GPIO9 - controls bootloader mode
