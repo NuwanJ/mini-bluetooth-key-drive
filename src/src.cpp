@@ -25,24 +25,26 @@ const uint8_t buttonPins[] = {
     PIN_BUTTON_3,
     PIN_BUTTON_4,
     PIN_BUTTON_5,
-    PIN_BUTTON_6
-};
+    PIN_BUTTON_6};
 
 bool lastState[6];
 
-void setup() {
+void setup()
+{
     Serial.begin(115200);
     Serial.println("Mini Bluetooth Key Drive starting...");
 
     // Initialize button pins with pull-ups
-    for (size_t i = 0; i < 6; i++) {
+    for (size_t i = 0; i < 6; i++)
+    {
         pinMode(buttonPins[i], INPUT_PULLUP);
         lastState[i] = false;
     }
 
     // Initialize I2C and display
     Wire.begin(PIN_SDA, PIN_SCL);
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+    {
         Serial.println("SSD1306 allocation failed");
     }
     display.clearDisplay();
@@ -53,11 +55,15 @@ void setup() {
     bleMouse.begin();
 }
 
-void loop() {
-    if (bleKeyboard.isConnected()) {
-        for (size_t i = 0; i < 6; i++) {
+void loop()
+{
+    if (bleKeyboard.isConnected())
+    {
+        for (size_t i = 0; i < 6; i++)
+        {
             bool pressed = digitalRead(buttonPins[i]) == LOW;
-            if (pressed && !lastState[i]) {
+            if (pressed && !lastState[i])
+            {
                 // Send number keystroke corresponding to button
                 bleKeyboard.write('1' + i);
 
@@ -77,4 +83,3 @@ void loop() {
 }
 
 #endif // UNIT_TEST
-
