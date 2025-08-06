@@ -9,10 +9,11 @@
 #define PIN_KNOB 0 // GPIO0 / ADC1_0
 
 // Analog Outputs --------
+
+// Digital Inputs --------
 #define PIN_ENC_A 0
 #define PIN_ENC_B 1
 
-// Digital Inputs --------
 #define PIN_BUTTON_1 3
 #define PIN_BUTTON_2 4
 #define PIN_BUTTON_3 7
