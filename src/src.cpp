@@ -1,29 +1,80 @@
-
 #include <Arduino.h>
 #include "define.h"
 
-// This is to hide non-test related source code.
-// https://docs.platformio.org/en/latest/plus/unit-testing.html
+#include <BleKeyboard.h>
+#include <BleMouse.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
 #ifndef UNIT_TEST
 
+// BLE peripherals
+BleKeyboard bleKeyboard("Mini Key Drive");
+BleMouse bleMouse("Mini Key Drive");
+
+// OLED display configuration
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 32
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Button pins - defined in pins.h
+const uint8_t buttonPins[] = {
+    PIN_BUTTON_1,
+    PIN_BUTTON_2,
+    PIN_BUTTON_3,
+    PIN_BUTTON_4,
+    PIN_BUTTON_5,
+    PIN_BUTTON_6
+};
+
+bool lastState[6];
+
 void setup() {
-    // put your setup code here, to run once:
-
-    // Enables Serial Communication with baudRate of 115200
     Serial.begin(115200);
-    Serial.println("PlatformIO ESP32 Boilerplate started...");
+    Serial.println("Mini Bluetooth Key Drive starting...");
 
-    pinMode(PIN_LED_INBUILT, OUTPUT);
+    // Initialize button pins with pull-ups
+    for (size_t i = 0; i < 6; i++) {
+        pinMode(buttonPins[i], INPUT_PULLUP);
+        lastState[i] = false;
+    }
+
+    // Initialize I2C and display
+    Wire.begin(PIN_SDA, PIN_SCL);
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+        Serial.println("SSD1306 allocation failed");
+    }
+    display.clearDisplay();
+    display.display();
+
+    // Start BLE services
+    bleKeyboard.begin();
+    bleMouse.begin();
 }
 
 void loop() {
-    // put your main code here, to run repeatedly:
+    if (bleKeyboard.isConnected()) {
+        for (size_t i = 0; i < 6; i++) {
+            bool pressed = digitalRead(buttonPins[i]) == LOW;
+            if (pressed && !lastState[i]) {
+                // Send number keystroke corresponding to button
+                bleKeyboard.write('1' + i);
 
-    digitalWrite(PIN_LED_INBUILT, HIGH);
-    delay(1000);
-    digitalWrite(PIN_LED_INBUILT, LOW);
-    delay(1000);
-
+                // Show pressed button on OLED
+                display.clearDisplay();
+                display.setTextSize(2);
+                display.setTextColor(SSD1306_WHITE);
+                display.setCursor(0, 0);
+                display.print("Button ");
+                display.print(i + 1);
+                display.display();
+            }
+            lastState[i] = pressed;
+        }
+    }
+    delay(10);
 }
 
-#endif
+#endif // UNIT_TEST
+

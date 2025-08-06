@@ -15,6 +15,14 @@
 #define PIN_ADC_0 0
 #define PIN_ADC_1 1
 
+// Button input pins ---------
+#define PIN_BUTTON_1 2
+#define PIN_BUTTON_2 3
+#define PIN_BUTTON_3 4
+#define PIN_BUTTON_4 5
+#define PIN_BUTTON_5 9
+#define PIN_BUTTON_6 10
+
 // I2C pins ---------------
 #define PIN_SCL 7
 #define PIN_SDA 6
